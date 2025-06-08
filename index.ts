@@ -42,7 +42,6 @@ import {
   type GitLabContent,
   type GitLabCreateUpdateFileResponse,
   type GitLabSearchResponse,
-  type GitLabTree,
   type GitLabCommit,
   type FileOperation,
   GetMergeRequestRawDiffSchema,
@@ -51,7 +50,7 @@ import {
 const server = new Server(
   {
     name: "gitlab-mcp-server",
-    version: "0.5.1",
+    version: "0.0.1",
   },
   {
     capabilities: {
@@ -69,6 +68,10 @@ if (!GITLAB_PERSONAL_ACCESS_TOKEN) {
   process.exit(1);
 }
 
+const defaultHeaders = {
+  Authorization: `Bearer ${GITLAB_PERSONAL_ACCESS_TOKEN}`,
+};
+
 async function forkProject(
   projectId: string,
   namespace?: string
@@ -83,7 +86,7 @@ async function forkProject(
   const response = await fetch(url + queryParams, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${GITLAB_PERSONAL_ACCESS_TOKEN}`,
+      ...defaultHeaders,
       "Content-Type": "application/json",
     },
   });
@@ -106,7 +109,7 @@ async function createBranch(
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${GITLAB_PERSONAL_ACCESS_TOKEN}`,
+        ...defaultHeaders,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -127,9 +130,7 @@ async function getDefaultBranchRef(projectId: string): Promise<string> {
   const response = await fetch(
     `${GITLAB_API_URL}/projects/${encodeURIComponent(projectId)}`,
     {
-      headers: {
-        Authorization: `Bearer ${GITLAB_PERSONAL_ACCESS_TOKEN}`,
-      },
+      headers: defaultHeaders,
     }
   );
 
@@ -155,9 +156,7 @@ async function getFileContents(
   }
 
   const response = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${GITLAB_PERSONAL_ACCESS_TOKEN}`,
-    },
+    headers: defaultHeaders,
   });
 
   if (!response.ok) {
@@ -182,7 +181,7 @@ async function createIssue(
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${GITLAB_PERSONAL_ACCESS_TOKEN}`,
+        ...defaultHeaders,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -213,7 +212,7 @@ async function createMergeRequest(
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${GITLAB_PERSONAL_ACCESS_TOKEN}`,
+        ...defaultHeaders,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -245,9 +244,7 @@ async function getMergeRequestRawDiff(
   );
 
   const response = await fetch(url.toString(), {
-    headers: {
-      Authorization: `Bearer ${GITLAB_PERSONAL_ACCESS_TOKEN}`,
-    },
+    headers: defaultHeaders,
   });
 
   if (!response.ok) {
@@ -289,7 +286,7 @@ async function createOrUpdateFile(
   const response = await fetch(url, {
     method,
     headers: {
-      Authorization: `Bearer ${GITLAB_PERSONAL_ACCESS_TOKEN}`,
+      ...defaultHeaders,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
@@ -315,7 +312,7 @@ async function createCommit(
     {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${GITLAB_PERSONAL_ACCESS_TOKEN}`,
+        ...defaultHeaders,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -348,9 +345,7 @@ async function searchProjects(
   url.searchParams.append("per_page", perPage.toString());
 
   const response = await fetch(url.toString(), {
-    headers: {
-      Authorization: `Bearer ${GITLAB_PERSONAL_ACCESS_TOKEN}`,
-    },
+    headers: defaultHeaders,
   });
 
   if (!response.ok) {
@@ -370,7 +365,7 @@ async function createRepository(
   const response = await fetch(`${GITLAB_API_URL}/projects`, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${GITLAB_PERSONAL_ACCESS_TOKEN}`,
+      ...defaultHeaders,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -396,9 +391,7 @@ async function getJobLogs(projectId: string, jobId: string): Promise<string> {
   );
 
   const response = await fetch(url.toString(), {
-    headers: {
-      Authorization: `Bearer ${GITLAB_PERSONAL_ACCESS_TOKEN}`,
-    },
+    headers: defaultHeaders,
   });
 
   if (!response.ok) {

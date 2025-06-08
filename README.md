@@ -9,10 +9,10 @@ MCP Server for the GitLab API, enabling project management, file operations, and
 - **Git History Preservation**: Operations maintain proper Git history without force pushing
 - **Batch Operations**: Support for both single-file and multi-file operations
 
-
 ## Tools
 
 1. `create_or_update_file`
+
    - Create or update a single file in a project
    - Inputs:
      - `project_id` (string): Project ID or URL-encoded path
@@ -24,6 +24,7 @@ MCP Server for the GitLab API, enabling project management, file operations, and
    - Returns: File content and commit details
 
 2. `push_files`
+
    - Push multiple files in a single commit
    - Inputs:
      - `project_id` (string): Project ID or URL-encoded path
@@ -33,6 +34,7 @@ MCP Server for the GitLab API, enabling project management, file operations, and
    - Returns: Updated branch reference
 
 3. `search_repositories`
+
    - Search for GitLab projects
    - Inputs:
      - `search` (string): Search query
@@ -41,6 +43,7 @@ MCP Server for the GitLab API, enabling project management, file operations, and
    - Returns: Project search results
 
 4. `create_repository`
+
    - Create a new GitLab project
    - Inputs:
      - `name` (string): Project name
@@ -50,6 +53,7 @@ MCP Server for the GitLab API, enabling project management, file operations, and
    - Returns: Created project details
 
 5. `get_file_contents`
+
    - Get contents of a file or directory
    - Inputs:
      - `project_id` (string): Project ID or URL-encoded path
@@ -58,6 +62,7 @@ MCP Server for the GitLab API, enabling project management, file operations, and
    - Returns: File/directory contents
 
 6. `create_issue`
+
    - Create a new issue
    - Inputs:
      - `project_id` (string): Project ID or URL-encoded path
@@ -69,6 +74,7 @@ MCP Server for the GitLab API, enabling project management, file operations, and
    - Returns: Created issue details
 
 7. `create_merge_request`
+
    - Create a new merge request
    - Inputs:
      - `project_id` (string): Project ID or URL-encoded path
@@ -80,39 +86,61 @@ MCP Server for the GitLab API, enabling project management, file operations, and
      - `allow_collaboration` (optional boolean): Allow commits from upstream members
    - Returns: Created merge request details
 
-8. `fork_repository`
+8. `get_merge_request_raw_diff`
+
+   - Get a merge request information of the difference in a raw format
+   - Inputs:
+     - `project_id` (string): Project ID or URL-encoded path
+     - `merge_request_id` (string): ID of the merge request
+   - Returns: The difference of the merge request in a raw format
+
+9. `fork_repository`
+
    - Fork a project
    - Inputs:
      - `project_id` (string): Project ID or URL-encoded path
      - `namespace` (optional string): Namespace to fork to
    - Returns: Forked project details
 
-9. `create_branch`
-   - Create a new branch
-   - Inputs:
-     - `project_id` (string): Project ID or URL-encoded path
-     - `branch` (string): Name for new branch
-     - `ref` (optional string): Source branch/commit for new branch
-   - Returns: Created branch reference
+10. `create_branch`
+
+- Create a new branch
+- Inputs:
+  - `project_id` (string): Project ID or URL-encoded path
+  - `branch` (string): Name for new branch
+  - `ref` (optional string): Source branch/commit for new branch
+- Returns: Created branch reference
+
+11. `get_job_logs`
+
+- Retrieve the logs from a job
+- Inputs:
+  - `project_id` (string): Project ID or URL-encoded path
+  - `job_id` (string): ID of the job
+- Returns: The logs of the job
 
 ## Setup
 
 ### Personal Access Token
+
 [Create a GitLab Personal Access Token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) with appropriate permissions:
-   - Go to User Settings > Access Tokens in GitLab
-   - Select the required scopes:
-     - `api` for full API access
-     - `read_api` for read-only access
-     - `read_repository` and `write_repository` for repository operations
-   - Create the token and save it securely
+
+- Go to User Settings > Access Tokens in GitLab
+- Select the required scopes:
+  - `api` for full API access
+  - `read_api` for read-only access
+  - `read_repository` and `write_repository` for repository operations
+- Create the token and save it securely
 
 ### Usage with Claude Desktop
+
 Add the following to your `claude_desktop_config.json`:
 
 #### Docker
+
 ```json
 {
-  "mcpServers": { 
+  "mcpServers": {
     "gitlab": {
       "command": "docker",
       "args": [
@@ -141,10 +169,7 @@ Add the following to your `claude_desktop_config.json`:
   "mcpServers": {
     "gitlab": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-gitlab"
-      ],
+      "args": ["-y", "@modelcontextprotocol/server-gitlab"],
       "env": {
         "GITLAB_PERSONAL_ACCESS_TOKEN": "<YOUR_TOKEN>",
         "GITLAB_API_URL": "https://gitlab.com/api/v4" // Optional, for self-hosted instances
