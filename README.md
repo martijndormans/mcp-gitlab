@@ -1,15 +1,15 @@
-# GitLab MCP Server
+# 🦊 GitLab MCP Server
 
-MCP Server for the GitLab API, enabling project management, file operations, and more.
+🚀 MCP Server for the GitLab API, enabling project management, file operations, and more.
 
-### Features
+### ✨ Features
 
-- **Automatic Branch Creation**: When creating/updating files or pushing changes, branches are automatically created if they don't exist
-- **Comprehensive Error Handling**: Clear error messages for common issues
-- **Git History Preservation**: Operations maintain proper Git history without force pushing
-- **Batch Operations**: Support for both single-file and multi-file operations
+- **🌿 Automatic Branch Creation**: When creating/updating files or pushing changes, branches are automatically created if they don't exist
+- **🛡️ Comprehensive Error Handling**: Clear error messages for common issues
+- **📚 Git History Preservation**: Operations maintain proper Git history without force pushing
+- **📦 Batch Operations**: Support for both single-file and multi-file operations
 
-## Tools
+## 🔧 Tools
 
 1. `create_or_update_file`
 
@@ -119,9 +119,9 @@ MCP Server for the GitLab API, enabling project management, file operations, and
   - `job_id` (string): ID of the job
 - Returns: The logs of the job
 
-## Setup
+## ⚙️ Setup
 
-### Personal Access Token
+### 🔑 Personal Access Token
 
 [Create a GitLab Personal Access Token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html) with appropriate permissions:
 
@@ -132,11 +132,11 @@ MCP Server for the GitLab API, enabling project management, file operations, and
   - `read_repository` and `write_repository` for repository operations
 - Create the token and save it securely
 
-### Usage with Claude Desktop
+### 💻 Usage with Claude Desktop
 
 Add the following to your `claude_desktop_config.json`:
 
-#### Docker
+#### 🐳 Docker
 
 ```json
 {
@@ -162,7 +162,7 @@ Add the following to your `claude_desktop_config.json`:
 }
 ```
 
-### NPX
+### 📦 NPX
 
 ```json
 {
@@ -179,7 +179,7 @@ Add the following to your `claude_desktop_config.json`:
 }
 ```
 
-## Build
+## 🏗️ Build
 
 Docker build:
 
@@ -187,11 +187,7 @@ Docker build:
 docker build -t vonwig/gitlab:mcp -f src/gitlab/Dockerfile .
 ```
 
-## Environment Variables
+## 🌍 Environment Variables
 
 - `GITLAB_PERSONAL_ACCESS_TOKEN`: Your GitLab personal access token (required)
 - `GITLAB_API_URL`: Base URL for GitLab API (optional, defaults to `https://gitlab.com/api/v4`)
-
-## License
-
-This MCP server is licensed under the MIT License. This means you are free to use, modify, and distribute the software, subject to the terms and conditions of the MIT License. For more details, please see the LICENSE file in the project repository.
